@@ -146,6 +146,6 @@ unzip ${rojo_filename} -d $TMPDIR
 mv $TMPDIR/rojo /usr/local/bin/rojo
 
 # Install onCreate.sh script for PATH configuration
-mkdir -p /usr/local/share/RyanLua-features-rojo
-cp "$(dirname "${BASH_SOURCE[0]}")/onCreate.sh" /usr/local/share/RyanLua-features-rojo/onCreate.sh
-chmod +x /usr/local/share/RyanLua-features-rojo/onCreate.sh
+mkdir -p /usr/local/share/ryanlua-features-rojo
+cp "$(dirname "${BASH_SOURCE[0]}")/onCreate.sh" /usr/local/share/ryanlua-features-rojo/onCreate.sh
+chmod +x /usr/local/share/ryanlua-features-rojo/onCreate.sh

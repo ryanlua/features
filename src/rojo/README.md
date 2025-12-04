@@ -7,7 +7,7 @@ Installs the provided version of Rojo, a toolchain manager and dependencies.
 
 ```json
 "features": {
-    "ghcr.io/RyanLua/features/rojo:0": {}
+    "ghcr.io/ryanlua/features/rojo:0": {}
 }
 ```
 
@@ -35,4 +35,4 @@ This Feature should work on recent versions of Debian/Ubuntu-based distributions
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/RyanLua/features/blob/main/src/rojo/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/ryanlua/features/blob/main/src/rojo/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

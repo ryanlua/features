@@ -1,6 +1,6 @@
 # Rojo Dev Container Feature
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/RyanLua/features?quickstart=1)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/ryanlua/features?quickstart=1)
 
 A dev container feature that installs [Rojo](https://rojo.space/) and optionally [Rokit](https://github.com/rojo-rbx/rokit), [Aftman](https://github.com/LPGhatguy/aftman), or [Foreman](https://github.com/Roblox/foreman) for toolchain management. Useful for developing Roblox experiences using [dev container supported tools](https://containers.dev/supporting.html) such as [GitHub Codespaces](https://github.com/features/codespaces).
 
@@ -33,8 +33,8 @@ To use this feature, add the following to your `devcontainer.json` file:
 }
 ```
 
-Learn more about this feature by seeing the [feature's README](https://github.com/RyanLua/features/tree/main/src/rojo).
+Learn more about this feature by seeing the [feature's README](https://github.com/ryanlua/features/tree/main/src/rojo).
 
 ## Template
 
-For a Roblox template using this feature, see https://github.com/RyanLua/templates.
+For a Roblox template using this feature, see https://github.com/ryanlua/templates.

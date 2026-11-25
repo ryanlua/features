@@ -17,7 +17,7 @@
                 "7.6.1"
             ],
             "default": "latest",
-            "description": "Rojo version to install. Use 'latest', 'none', or any release tag (e.g. 7.7.1). See https://github.com/rojo-rbx/rojo/releases"
+            "description": "Rojo version to install. Use 'latest', 'none', or any version number (e.g. 7.7.1)."
         },
         "toolchainManager": {
             "type": "string",

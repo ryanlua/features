@@ -76,7 +76,7 @@ if ! type git > /dev/null 2>&1; then
 fi
 
 # Use dpkg --print-architecture to find if arch is aarch64 or x86_64
-if [ "$(dpkg --print-architecture)" = "aarch64" ]; then
+if [ "$(dpkg --print-architecture)" = "arm64" ]; then
     ARCH="aarch64"
 else
     ARCH="x86_64"

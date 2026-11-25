@@ -96,6 +96,8 @@ if [ "${TOOLCHAIN_MANAGER}" = "aftman" ]; then
     mv $TMPDIR/aftman /usr/local/bin/aftman
     chmod +x /usr/local/bin/aftman
     aftman self-install
+
+    echo 'export PATH="$HOME/.aftman/bin:$PATH"' > /etc/profile.d/aftman.sh
 fi
 
 # Install Foreman
@@ -113,6 +115,8 @@ if [ "${TOOLCHAIN_MANAGER}" = "foreman" ]; then
 
     mv $TMPDIR/foreman /usr/local/bin/foreman
     chmod +x /usr/local/bin/foreman
+
+    echo 'export PATH="$HOME/.foreman/bin:$PATH"' > /etc/profile.d/foreman.sh
 fi
 
 # Install Rokit
@@ -128,7 +132,6 @@ if [ "${TOOLCHAIN_MANAGER}" = "rokit" ]; then
     chmod +x /usr/local/bin/rokit
     rokit self-install
 
-    # Ensure ~/.rokit/bin is on PATH for login shells
     echo 'export PATH="$HOME/.rokit/bin:$PATH"' > /etc/profile.d/rokit.sh
 fi
 

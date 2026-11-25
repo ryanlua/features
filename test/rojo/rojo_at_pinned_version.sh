@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This test file will be executed against one of the scenarios that
-# includes the 'rojo' feature with "version": "7.3.0".
+# includes the 'rojo' feature with "version": "7.7.1".
 
 set -e
 

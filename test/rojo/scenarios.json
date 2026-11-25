@@ -3,7 +3,7 @@
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
         "features": {
             "rojo": {
-                "version": "7.3.0"
+                "version": "7.7.1"
             }
         }
     },

@@ -43,7 +43,7 @@ source dev-container-features-test-lib
 check "rokit version" rokit --version
 check "rojo version" rojo --version
 check "rokit init" rokit init
-check "rokit add wally" rokit add UpliftGames/wally
+check "rokit add wally" rokit add --force UpliftGames/wally
 check "wally version" wally --version
 
 # Report results

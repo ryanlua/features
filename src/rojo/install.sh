@@ -138,12 +138,14 @@ if [ "${TOOLCHAIN_MANAGER}" = "rokit" ]; then
 fi
 
 # Install Rojo
-find_version_from_git_tags ROJO_VERSION https://github.com/rojo-rbx/rojo
-rojo_filename="rojo-${ROJO_VERSION}-linux-${ARCH}.zip"
+if [ "${ROJO_VERSION}" != "none" ]; then
+    find_version_from_git_tags ROJO_VERSION https://github.com/rojo-rbx/rojo
+    rojo_filename="rojo-${ROJO_VERSION}-linux-${ARCH}.zip"
 
-wget https://github.com/rojo-rbx/rojo/releases/download/v${ROJO_VERSION}/${rojo_filename}
-unzip ${rojo_filename} -d $TMPDIR
-mv $TMPDIR/rojo /usr/local/bin/rojo
+    wget https://github.com/rojo-rbx/rojo/releases/download/v${ROJO_VERSION}/${rojo_filename}
+    unzip ${rojo_filename} -d $TMPDIR
+    mv $TMPDIR/rojo /usr/local/bin/rojo
+fi
 
 # Install onCreate.sh script for PATH configuration
 mkdir -p /usr/local/share/ryanlua-features-rojo

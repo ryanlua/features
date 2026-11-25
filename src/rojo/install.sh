@@ -126,15 +126,6 @@ if [ "${TOOLCHAIN_MANAGER}" = "rokit" ]; then
 
     mv $TMPDIR/rokit /usr/local/bin/rokit
     chmod +x /usr/local/bin/rokit
-
-    # Check if rokit works with current GLIBC version
-    if ! /usr/local/bin/rokit --version > /dev/null 2>&1; then
-        echo "Error: Rokit requires a newer GLIBC version than available on this system."
-        echo "Please use a compatible base image (Debian trixie / debian-13 or later) or a different toolchain manager."
-        echo "Available options: 'aftman' or 'foreman'"
-        exit 1
-    fi
-
     rokit self-install
 
     # Ensure ~/.rokit/bin is on PATH for login shells

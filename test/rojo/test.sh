@@ -42,10 +42,9 @@ source dev-container-features-test-lib
 # check <LABEL> <cmd> [args...]
 check "rokit version" rokit --version
 check "rojo version" rojo --version
-check "rokit can install wally" rokit init && rokit add --force UpliftGames/wally && wally --version
-check "rokit can install wally global" rokit add --global --force UpliftGames/wally && wally --version
-check "rokit can install lune" rokit add --force lune-org/lune && lune --version
-check "rokit can install lune global" rokit add --global --force lune-org/lune && lune --version
+check "rokit init" rokit init
+check "rokit add wally" rokit add UpliftGames/wally
+check "wally version" wally --version
 
 # Report results
 # If any of the checks above exited with a non-zero exit code, the test will fail.

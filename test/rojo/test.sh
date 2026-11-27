@@ -42,6 +42,7 @@ source dev-container-features-test-lib
 # check <LABEL> <cmd> [args...]
 check "rokit version" rokit --version
 check "rojo version" rojo --version
+check "rojo managed by rokit" grep -q "rojo-rbx/rojo" "${HOME}/.rokit/rokit.toml"
 check "rokit init" rokit init
 check "rokit add wally" rokit add --force UpliftGames/wally
 check "wally version" wally --version

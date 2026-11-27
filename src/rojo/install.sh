@@ -83,17 +83,17 @@ else
 fi
 
 # Make sure we have a temporary directory
-TMPDIR=/home/vscode/tmp
-mkdir -p $TMPDIR
+TMPDIR="/home/vscode/tmp"
+mkdir -p "${TMPDIR}"
 
 # Install Aftman
 if [ "${TOOLCHAIN_MANAGER}" = "aftman" ]; then
     find_version_from_git_tags AFTMAN_VERSION https://github.com/LPGhatguy/aftman
     aftman_filename="aftman-${AFTMAN_VERSION}-linux-${ARCH}.zip"
 
-    wget https://github.com/LPGhatguy/aftman/releases/download/v${AFTMAN_VERSION}/${aftman_filename}
-    unzip ${aftman_filename} -d $TMPDIR
-    mv $TMPDIR/aftman /usr/local/bin/aftman
+    wget -O "${TMPDIR}/${aftman_filename}" "https://github.com/LPGhatguy/aftman/releases/download/v${AFTMAN_VERSION}/${aftman_filename}"
+    unzip "${TMPDIR}/${aftman_filename}" -d "${TMPDIR}"
+    mv "${TMPDIR}/aftman" /usr/local/bin/aftman
     chmod +x /usr/local/bin/aftman
     aftman self-install
 
@@ -110,10 +110,10 @@ if [ "${TOOLCHAIN_MANAGER}" = "foreman" ]; then
     fi
     foreman_filename="foreman-linux-${FOREMAN_ARCH}.zip"
 
-    wget https://github.com/Roblox/foreman/releases/download/v${FOREMAN_VERSION}/${foreman_filename}
-    unzip ${foreman_filename} -d $TMPDIR
+    wget -O "${TMPDIR}/${foreman_filename}" "https://github.com/Roblox/foreman/releases/download/v${FOREMAN_VERSION}/${foreman_filename}"
+    unzip "${TMPDIR}/${foreman_filename}" -d "${TMPDIR}"
 
-    mv $TMPDIR/foreman /usr/local/bin/foreman
+    mv "${TMPDIR}/foreman" /usr/local/bin/foreman
     chmod +x /usr/local/bin/foreman
 
     echo 'export PATH="$HOME/.foreman/bin:$PATH"' > /etc/profile.d/foreman.sh
@@ -121,24 +121,43 @@ fi
 
 # Install Rokit
 if [ "${TOOLCHAIN_MANAGER}" = "rokit" ]; then
-    check_packages curl
     find_version_from_git_tags ROKIT_VERSION https://github.com/rojo-rbx/rokit
     rokit_filename="rokit-${ROKIT_VERSION}-linux-${ARCH}.zip"
 
-    wget https://github.com/rojo-rbx/rokit/releases/download/v${ROKIT_VERSION}/${rokit_filename}
-    unzip ${rokit_filename} -d $TMPDIR
+    wget -O "${TMPDIR}/${rokit_filename}" "https://github.com/rojo-rbx/rokit/releases/download/v${ROKIT_VERSION}/${rokit_filename}"
+    unzip "${TMPDIR}/${rokit_filename}" -d "${TMPDIR}"
 
-    mv $TMPDIR/rokit /usr/local/bin/rokit
+    mv "${TMPDIR}/rokit" /usr/local/bin/rokit
     chmod +x /usr/local/bin/rokit
     rokit self-install
 
     echo 'export PATH="$HOME/.rokit/bin:$PATH"' > /etc/profile.d/rokit.sh
 fi
 
-# Install Rojo
-find_version_from_git_tags ROJO_VERSION https://github.com/rojo-rbx/rojo
-rojo_filename="rojo-${ROJO_VERSION}-linux-${ARCH}.zip"
+# Install Rojo with the toolchain manager. Fall back to GitHub when that cannot be done.
+if [ "${ROJO_VERSION}" != "none" ]; then
+    find_version_from_git_tags ROJO_VERSION https://github.com/rojo-rbx/rojo
+    rojo_spec="rojo-rbx/rojo@${ROJO_VERSION}"
+    rojo_bin=""
 
-wget https://github.com/rojo-rbx/rojo/releases/download/v${ROJO_VERSION}/${rojo_filename}
-unzip ${rojo_filename} -d $TMPDIR
-mv $TMPDIR/rojo /usr/local/bin/rojo
+    case "${TOOLCHAIN_MANAGER}" in
+        rokit)
+            su "${_REMOTE_USER}" -c "rokit add --global --force ${rojo_spec}" && rojo_bin="${_REMOTE_USER_HOME}/.rokit/tool-storage/rojo-rbx/rojo/${ROJO_VERSION}/rojo" ;;
+        aftman)
+            su "${_REMOTE_USER}" -c "aftman trust rojo-rbx/rojo && aftman add --global ${rojo_spec}" && rojo_bin="${_REMOTE_USER_HOME}/.aftman/tool-storage/rojo-rbx/rojo/${ROJO_VERSION}/rojo" ;;
+        foreman)
+            su "${_REMOTE_USER}" -c "mkdir -p '${_REMOTE_USER_HOME}/.foreman' && printf '[tools]\nrojo = { github = \"rojo-rbx/rojo\", version = \"=${ROJO_VERSION}\" }\n' > '${_REMOTE_USER_HOME}/.foreman/foreman.toml' && foreman install" && rojo_bin="${_REMOTE_USER_HOME}/.foreman/tools/rojo-rbx__rojo-${ROJO_VERSION}" ;;
+    esac
+
+    if [ -n "${rojo_bin}" ] && ln -sfn "${rojo_bin}" /usr/local/bin/rojo && su "${_REMOTE_USER}" -c "/usr/local/bin/rojo --version" >/dev/null 2>&1; then
+        echo "Installed Rojo ${ROJO_VERSION} with ${TOOLCHAIN_MANAGER}."
+    else
+        echo "Installing Rojo ${ROJO_VERSION} from GitHub releases."
+        rm -f /usr/local/bin/rojo
+        rojo_filename="rojo-${ROJO_VERSION}-linux-${ARCH}.zip"
+        wget -O "${TMPDIR}/${rojo_filename}" "https://github.com/rojo-rbx/rojo/releases/download/v${ROJO_VERSION}/${rojo_filename}"
+        unzip "${TMPDIR}/${rojo_filename}" -d "${TMPDIR}"
+        mv "${TMPDIR}/rojo" /usr/local/bin/rojo
+        chmod +x /usr/local/bin/rojo
+    fi
+fi

@@ -33,5 +33,14 @@
                 "toolchainManager": "rokit"
             }
         }
+    },
+    "install_from_github": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+        "remoteUser": "vscode",
+        "features": {
+            "rojo": {
+                "toolchainManager": "none"
+            }
+        }
     }
 }

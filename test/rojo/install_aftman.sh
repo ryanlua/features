@@ -11,6 +11,8 @@ source dev-container-features-test-lib
 # Feature-specific tests
 # The 'check' command comes from the dev-container-features-test-lib.
 check "aftman version" aftman --version
+check "rojo version" rojo --version
+check "rojo managed by aftman" grep -q "rojo-rbx/rojo" "${HOME}/.aftman/aftman.toml"
 check "aftman profile" grep -q '\$HOME/.aftman/bin' /etc/profile.d/aftman.sh
 check "aftman bin in PATH" bash -lc 'case ":$PATH:" in *:"$HOME/.aftman/bin":*) true ;; *) false ;; esac'
 

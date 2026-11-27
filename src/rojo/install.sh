@@ -44,7 +44,7 @@ find_version_from_git_tags() {
     local prefix=${3:-"tags/v"}
     local separator=${4:-"."}
     local last_part_optional=${5:-"false"}
-    if [ "$(echo "${requested_version}" | grep -o "\." | wc -l)" != "2" ]; then
+    if [ "$(echo "${requested_version}" | grep -o "." | wc -l)" != "2" ]; then
         local escaped_separator=${separator//./\\.}
         local last_part
         if [ "${last_part_optional}" = "true" ]; then
@@ -61,10 +61,10 @@ find_version_from_git_tags() {
             declare -g ${variable_name}="$(echo "${version_list}" | grep -E -m 1 "^${requested_version//./\\.}([\\.\\s]|$)")"
             set -e
         fi
-        if [ -z "${!variable_name}" ] || ! echo "${version_list}" | grep "^${!variable_name//./\\.}$" > /dev/null 2>&1; then
-            echo -e "Invalid ${variable_name} value: ${requested_version}\nValid values:\n${version_list}" >&2
-            exit 1
-        fi
+    fi
+    if [ -z "${!variable_name}" ] || ! echo "${version_list}" | grep "^${!variable_name//./\\.}$" > /dev/null 2>&1; then
+        echo -e "Invalid ${variable_name} value: ${requested_version}\nValid values:\n${version_list}" >&2
+        exit 1
     fi
     echo "${variable_name}=${!variable_name}"
 }

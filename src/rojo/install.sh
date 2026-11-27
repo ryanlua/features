@@ -146,7 +146,7 @@ if [ "${ROJO_VERSION}" != "none" ]; then
         aftman)
             su "${_REMOTE_USER}" -c "aftman trust rojo-rbx/rojo && aftman add --global ${rojo_spec}" && rojo_bin="${_REMOTE_USER_HOME}/.aftman/bin/rojo" ;;
         foreman)
-            su "${_REMOTE_USER}" -c "mkdir -p '${_REMOTE_USER_HOME}/.foreman' && printf '[tools]\nrojo = { github = \"rojo-rbx/rojo\", version = \"${ROJO_VERSION}\" }\n' > '${_REMOTE_USER_HOME}/.foreman/foreman.toml' && foreman install" && rojo_bin="${_REMOTE_USER_HOME}/.foreman/bin/rojo" ;;
+            su "${_REMOTE_USER}" -c "mkdir -p '${_REMOTE_USER_HOME}/.foreman' && printf '[tools]\nrojo = { github = \"rojo-rbx/rojo\", version = \"=${ROJO_VERSION}\" }\n' > '${_REMOTE_USER_HOME}/.foreman/foreman.toml' && foreman install" && rojo_bin="${_REMOTE_USER_HOME}/.foreman/bin/rojo" ;;
     esac
 
     if [ -n "${rojo_bin}" ] && ln -sfn "${rojo_bin}" /usr/local/bin/rojo && su "${_REMOTE_USER}" -c "/usr/local/bin/rojo --version" >/dev/null 2>&1; then

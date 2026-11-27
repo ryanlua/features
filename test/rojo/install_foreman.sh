@@ -11,6 +11,8 @@ source dev-container-features-test-lib
 # Feature-specific tests
 # The 'check' command comes from the dev-container-features-test-lib.
 check "foreman version" foreman --version
+check "rojo version" rojo --version
+check "rojo managed by foreman" grep -q "rojo-rbx/rojo" "${HOME}/.foreman/foreman.toml"
 check "foreman profile" grep -q '\$HOME/.foreman/bin' /etc/profile.d/foreman.sh
 check "foreman bin in PATH" bash -lc 'case ":$PATH:" in *:"$HOME/.foreman/bin":*) true ;; *) false ;; esac'
 

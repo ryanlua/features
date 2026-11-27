@@ -76,7 +76,7 @@ if ! type git > /dev/null 2>&1; then
 fi
 
 # Use dpkg --print-architecture to find if arch is aarch64 or x86_64
-if [ "$(dpkg --print-architecture)" = "aarch64" ]; then
+if [ "$(dpkg --print-architecture)" = "arm64" ]; then
     ARCH="aarch64"
 else
     ARCH="x86_64"
@@ -94,7 +94,10 @@ if [ "${TOOLCHAIN_MANAGER}" = "aftman" ]; then
     wget https://github.com/LPGhatguy/aftman/releases/download/v${AFTMAN_VERSION}/${aftman_filename}
     unzip ${aftman_filename} -d $TMPDIR
     mv $TMPDIR/aftman /usr/local/bin/aftman
+    chmod +x /usr/local/bin/aftman
     aftman self-install
+
+    echo 'export PATH="$HOME/.aftman/bin:$PATH"' > /etc/profile.d/aftman.sh
 fi
 
 # Install Foreman
@@ -112,6 +115,8 @@ if [ "${TOOLCHAIN_MANAGER}" = "foreman" ]; then
 
     mv $TMPDIR/foreman /usr/local/bin/foreman
     chmod +x /usr/local/bin/foreman
+
+    echo 'export PATH="$HOME/.foreman/bin:$PATH"' > /etc/profile.d/foreman.sh
 fi
 
 # Install Rokit
@@ -125,16 +130,9 @@ if [ "${TOOLCHAIN_MANAGER}" = "rokit" ]; then
 
     mv $TMPDIR/rokit /usr/local/bin/rokit
     chmod +x /usr/local/bin/rokit
-    
-    # Check if rokit works with current GLIBC version
-    if ! /usr/local/bin/rokit --version > /dev/null 2>&1; then
-        echo "Warning: Rokit requires a newer GLIBC version than available on this system."
-        echo "Please use a newer base image (Ubuntu 22.04+ or equivalent) or use a different toolchain manager."
-        echo "Available options: 'aftman' or 'foreman'"
-        exit 1
-    fi
-    
     rokit self-install
+
+    echo 'export PATH="$HOME/.rokit/bin:$PATH"' > /etc/profile.d/rokit.sh
 fi
 
 # Install Rojo
@@ -146,8 +144,3 @@ if [ "${ROJO_VERSION}" != "none" ]; then
     unzip ${rojo_filename} -d $TMPDIR
     mv $TMPDIR/rojo /usr/local/bin/rojo
 fi
-
-# Install onCreate.sh script for PATH configuration
-mkdir -p /usr/local/share/ryanlua-features-rojo
-cp "$(dirname "${BASH_SOURCE[0]}")/onCreate.sh" /usr/local/share/ryanlua-features-rojo/onCreate.sh
-chmod +x /usr/local/share/ryanlua-features-rojo/onCreate.sh

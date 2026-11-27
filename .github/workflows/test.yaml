@@ -15,8 +15,8 @@ jobs:
         features:
           - rojo
         baseImage:
-          - debian:trixie
-          - ubuntu:latest
+          - debian:bookworm
+          - ubuntu:22.04
           - mcr.microsoft.com/devcontainers/base:ubuntu
     steps:
       - uses: actions/checkout@v7

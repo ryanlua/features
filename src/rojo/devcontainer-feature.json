@@ -36,9 +36,6 @@
             ]
         }
     },
-    "onCreateCommand": {
-        "rojo": "/usr/local/share/ryanlua-features-rojo/onCreate.sh"
-    },
     "installsAfter": [
         "ghcr.io/devcontainers/features/common-utils"
     ]

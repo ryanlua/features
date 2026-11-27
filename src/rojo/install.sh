@@ -121,7 +121,6 @@ fi
 
 # Install Rokit
 if [ "${TOOLCHAIN_MANAGER}" = "rokit" ]; then
-    check_packages curl
     find_version_from_git_tags ROKIT_VERSION https://github.com/rojo-rbx/rokit
     rokit_filename="rokit-${ROKIT_VERSION}-linux-${ARCH}.zip"
 

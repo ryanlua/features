@@ -11,6 +11,7 @@
             "type": "string",
             "proposals": [
                 "latest",
+                "7.7.1",
                 "none"
             ],
             "default": "latest",

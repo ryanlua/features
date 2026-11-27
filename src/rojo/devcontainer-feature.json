@@ -11,10 +11,7 @@
             "type": "string",
             "proposals": [
                 "latest",
-                "none",
-                "7.7.1",
-                "7.7.0",
-                "7.6.1"
+                "none"
             ],
             "default": "latest",
             "description": "Rojo version to install. Use 'latest', 'none', or any version number (e.g. 7.7.1)."
